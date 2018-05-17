@@ -14,7 +14,7 @@ namespace Harjoitus_1_2
         {
             Socket palvelin = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-            IPEndPoint iep = new IPEndPoint(IPAddress.Any, 25000);
+            IPEndPoint iep = new IPEndPoint(IPAddress.Loopback, 25000);
 
             palvelin.Bind(iep);
             palvelin.Listen(5);
@@ -32,7 +32,7 @@ namespace Harjoitus_1_2
             String message = sr.ReadLine();
 
             sw.WriteLine("Iisakin palvelin;" + message);
-
+            sw.Flush();
             asiakas.Close();
            
             Console.ReadKey();
