@@ -24,6 +24,7 @@ namespace ITKP104
                 paljon = soketti.Receive(rec);
             }
             Console.WriteLine(vastaus);
+            soketti.Close();
         }
     }
 }
