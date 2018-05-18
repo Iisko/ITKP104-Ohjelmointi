@@ -41,7 +41,7 @@ namespace Harjoitus_3_6
                 EndPoint remote = (EndPoint)asiakas;
                 int received = s.ReceiveFrom(rec,ref remote);
 
-                String rec_string = Encoding.ASCII.GetString(rec);
+                String rec_string = Encoding.ASCII.GetString(rec, 0, received);
                 char[] delim = { ';' };
                 String[] palat = rec_string.Split(delim, 2);
                 if(palat.Length < 2)
