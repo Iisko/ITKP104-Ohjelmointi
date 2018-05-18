@@ -36,7 +36,32 @@ namespace Harjoitus_3_6
 
             while(!Console.KeyAvailable)
             {
-                s.ReceiveFrom();
+                byte[] rec = new byte[256];
+                IPEndPoint asiakas = new IPEndPoint(IPAddress.Any, 0);
+                EndPoint remote = (EndPoint)asiakas;
+                int received = s.ReceiveFrom(rec,ref remote);
+
+                String rec_string = Encoding.ASCII.GetString(rec);
+                char[] delim = { ';' };
+                String[] palat = rec_string.Split(delim, 2);
+                if(palat.Length < 2)
+                {
+                    
+                }
+                else
+                {
+                    if(!asiakkaat.Contains(remote))
+                    {
+                        asiakkaat.Add(remote);
+                        Console.WriteLine("Uusi asiakas: [{0}:{1}]", ((IPEndPoint)remote).Address, ((IPEndPoint)remote).Port);
+                    }
+                    Console.WriteLine("{0}: {1}", palat[0], palat[1]);
+
+                    foreach(EndPoint client in asiakkaat)
+                    {
+                        s.SendTo(Encoding.ASCII.GetBytes(rec_string), client);
+                    }
+                }
             }
 
             Console.ReadKey();
