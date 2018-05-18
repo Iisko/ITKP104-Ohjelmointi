@@ -60,6 +60,40 @@ namespace Harjoitus_4_8
                         }
                         break;
                     case "GAME":
+                        switch (palat[0])
+                        {
+                            case "ACK":
+                                switch (palat[1])
+                                {
+                                    case "300":
+                                        Console.WriteLine("OK, odotetaan vastustajaa...");
+                                        break;
+                                }
+                                break;
+                            case "DATA":
+                                palvelin.SendTo(Encoding.ASCII.GetBytes("ACK 300"), Pep);
+                                Console.WriteLine("Anna numero");
+                                String luku = Console.ReadLine();
+                                palvelin.SendTo(Encoding.ASCII.GetBytes("DATA " + luku), Pep);
+                                break;
+                            default:
+                                Console.WriteLine("Virhe " + palat[0] + " " + palat[1]);
+                                break;
+                            case "QUIT":
+                                switch (palat[1])
+                                {
+                                    case "501":
+                                        Console.WriteLine("Voitit pelin!");
+                                        break;
+                                    case "502":
+                                        Console.WriteLine("Vastustajasi voitti pelin!");
+                                        break;
+                                    default:
+                                        Console.WriteLine("Virhe " + palat[0] + " " + palat[1]);
+                                        break;
+                                }
+                                break;
+                        }
                         break;
                 }
             }
